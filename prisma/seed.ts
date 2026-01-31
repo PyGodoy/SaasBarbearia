@@ -1,102 +1,109 @@
-import { PrismaClient } from "../src/generated/prisma";
+import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
 async function seedDatabase() {
   try {
     const images = [
-      "https://utfs.io/f/c97a2dc9-cf62-468b-a851-bfd2bdde775f-16p.png",
-      "https://utfs.io/f/45331760-899c-4b4b-910e-e00babb6ed81-16q.png",
-      "https://utfs.io/f/5832df58-cfd7-4b3f-b102-42b7e150ced2-16r.png",
-      "https://utfs.io/f/7e309eaa-d722-465b-b8b6-76217404a3d3-16s.png",
-      "https://utfs.io/f/178da6b6-6f9a-424a-be9d-a2feb476eb36-16t.png",
-      "https://utfs.io/f/2f9278ba-3975-4026-af46-64af78864494-16u.png",
-      "https://utfs.io/f/988646ea-dcb6-4f47-8a03-8d4586b7bc21-16v.png",
-      "https://utfs.io/f/60f24f5c-9ed3-40ba-8c92-0cd1dcd043f9-16w.png",
-      "https://utfs.io/f/f64f1bd4-59ce-4ee3-972d-2399937eeafc-16x.png",
-      "https://utfs.io/f/e995db6d-df96-4658-99f5-11132fd931e1-17j.png",
-      "https://utfs.io/f/3bcf33fc-988a-462b-8b98-b811ee2bbd71-17k.png",
-      "https://utfs.io/f/5788be0e-2307-4bb4-b603-d9dd237950a2-17l.png",
-      "https://utfs.io/f/6b0888f8-b69f-4be7-a13b-52d1c0c9cab2-17m.png",
-      "https://utfs.io/f/ef45effa-415e-416d-8c4a-3221923cd10f-17n.png",
-      "https://utfs.io/f/ef45effa-415e-416d-8c4a-3221923cd10f-17n.png",
-      "https://utfs.io/f/a55f0f39-31a0-4819-8796-538d68cc2a0f-17o.png",
-      "https://utfs.io/f/5c89f046-80cd-4443-89df-211de62b7c2a-17p.png",
-      "https://utfs.io/f/23d9c4f7-8bdb-40e1-99a5-f42271b7404a-17q.png",
-      "https://utfs.io/f/9f0847c2-d0b8-4738-a673-34ac2b9506ec-17r.png",
-      "https://utfs.io/f/07842cfb-7b30-4fdc-accc-719618dfa1f2-17s.png",
-      "https://utfs.io/f/0522fdaf-0357-4213-8f52-1d83c3dcb6cd-18e.png",
+      "https://plus.unsplash.com/premium_photo-1661322688147-76db73c4f598?q=80&w=400&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "https://plus.unsplash.com/premium_photo-1675686363507-22a8d0e11b4c?q=80&w=400&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "https://images.unsplash.com/photo-1704455306925-1401c3012117?q=80&w=400&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "https://images.unsplash.com/photo-1629909613654-28e377c37b09?w=400",
+      "https://images.unsplash.com/photo-1740410643780-883b33ee1b86?q=80&w=400&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "https://plus.unsplash.com/premium_photo-1682145288913-979906a9ebc8?q=80&w=400&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "https://plus.unsplash.com/premium_photo-1675686363532-f4ad697ecb46?q=80&w=400&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "https://images.unsplash.com/photo-1704455306251-b4634215d98f?q=80&w=400&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "https://plus.unsplash.com/premium_photo-1675686363399-91ad6111f82d?q=80&w=400&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "https://images.unsplash.com/photo-1740410643780-883b33ee1b86?q=80&w=400&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     ];
     // Nomes criativos para as barbearias
     const creativeNames = [
-      "Barbearia Vintage",
-      "Corte & Estilo",
-      "Barba & Navalha",
-      "The Dapper Den",
-      "Cabelo & Cia.",
-      "Machado & Tesoura",
-      "Barbearia Elegance",
-      "Aparência Impecável",
-      "Estilo Urbano",
-      "Estilo Clássico",
+      "OdontoVida Clínica Odontológica",
+      "Sorrisso - Centro Odontológico",
+      "DentalCare Premium",
+      "Clínica Dental Excellence",
+      "OdontoPro - Saúde Bucal",
+      "SmilePlus Odontologia",
+      "Centro Odontológico Sorriso Novo",
+      "Clínica DentalHealth",
+      "Odontologia Integrada Vita",
+      "Perfect Smile Odontologia",
     ];
 
     // Endereços fictícios para as barbearias
     const addresses = [
-      "Rua da Barbearia, 123",
-      "Avenida dos Cortes, 456",
-      "Praça da Barba, 789",
-      "Travessa da Navalha, 101",
-      "Alameda dos Estilos, 202",
-      "Estrada do Machado, 303",
-      "Avenida Elegante, 404",
-      "Praça da Aparência, 505",
-      "Rua Urbana, 606",
-      "Avenida Clássica, 707",
+      "Av. Paulista, 1500 - Bela Vista, São Paulo - SP",
+      "Rua Augusta, 2450 - Jardins, São Paulo - SP",
+      "Av. Brigadeiro Faria Lima, 3064 - Itaim Bibi, São Paulo - SP",
+      "Rua Oscar Freire, 1200 - Cerqueira César, São Paulo - SP",
+      "Av. das Nações Unidas, 4777 - Vila Olímpia, São Paulo - SP",
+      "Rua Haddock Lobo, 595 - Cerqueira César, São Paulo - SP",
+      "Av. Angélica, 2530 - Consolação, São Paulo - SP",
+      "Rua Teodoro Sampaio, 1020 - Pinheiros, São Paulo - SP",
+      "Av. Europa, 158 - Jardim Europa, São Paulo - SP",
+      "Rua Bela Cintra, 756 - Consolação, São Paulo - SP",
     ];
 
     const services = [
       {
-        name: "Corte de Cabelo",
-        description: "Estilo personalizado com as últimas tendências.",
-        price: 60.0,
-        imageUrl:
-          "https://utfs.io/f/0ddfbd26-a424-43a0-aaf3-c3f1dc6be6d1-1kgxo7.png",
+        name: "Consulta de Avaliação",
+        description: "Avaliação completa da saúde bucal com exame clínico detalhado.",
+        price: 120.0,
+        imageUrl: "https://images.unsplash.com/photo-1609840114035-3c981b782dfe?w=300", // Dentista examinando paciente
       },
       {
-        name: "Barba",
-        description: "Modelagem completa para destacar sua masculinidade.",
-        price: 40.0,
-        imageUrl:
-          "https://utfs.io/f/e6bdffb6-24a9-455b-aba3-903c2c2b5bde-1jo6tu.png",
+        name: "Limpeza Dental (Profilaxia)",
+        description: "Remoção de placa bacteriana e tártaro para manter a saúde bucal.",
+        price: 150.0,
+        imageUrl: "https://images.unsplash.com/photo-1606811971618-4486d14f3f99?w=300", // Instrumentos de limpeza
       },
       {
-        name: "Pézinho",
-        description: "Acabamento perfeito para um visual renovado.",
-        price: 35.0,
-        imageUrl:
-          "https://utfs.io/f/8a457cda-f768-411d-a737-cdb23ca6b9b5-b3pegf.png",
+        name: "Restauração em Resina",
+        description: "Tratamento de cáries com material estético de alta qualidade.",
+        price: 180.0,
+        imageUrl: "https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?w=300", // Tratamento dentário
       },
       {
-        name: "Sobrancelha",
-        description: "Expressão acentuada com modelagem precisa.",
-        price: 20.0,
-        imageUrl:
-          "https://utfs.io/f/2118f76e-89e4-43e6-87c9-8f157500c333-b0ps0b.png",
+        name: "Clareamento Dental",
+        description: "Procedimento para deixar os dentes mais brancos e brilhantes.",
+        price: 450.0,
+        imageUrl: "https://images.unsplash.com/photo-1606811841689-23dfddce3e95?w=300", // Sorriso branco
       },
       {
-        name: "Massagem",
-        description: "Relaxe com uma massagem revigorante.",
-        price: 50.0,
-        imageUrl:
-          "https://utfs.io/f/c4919193-a675-4c47-9f21-ebd86d1c8e6a-4oen2a.png",
+        name: "Extração Dentária",
+        description: "Remoção segura de dentes comprometidos ou inclusos.",
+        price: 200.0,
+        imageUrl: "https://images.unsplash.com/photo-1739902526173-06750b78cfb7?q=80&w=300&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D", // Instrumentos cirúrgicos
       },
       {
-        name: "Hidratação",
-        description: "Hidratação profunda para cabelo e barba.",
-        price: 25.0,
-        imageUrl:
-          "https://utfs.io/f/8a457cda-f768-411d-a737-cdb23ca6b9b5-b3pegf.png",
+        name: "Canal (Endodontia)",
+        description: "Tratamento de canal para salvar dentes com polpa comprometida.",
+        price: 380.0,
+        imageUrl: "https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?w=300", // Procedimento endodôntico
+      },
+      {
+        name: "Prótese Dentária",
+        description: "Reposição de dentes perdidos com próteses personalizadas.",
+        price: 850.0,
+        imageUrl: "https://images.unsplash.com/photo-1606811971618-4486d14f3f99?w=300", // Prótese dental
+      },
+      {
+        name: "Implante Dentário",
+        description: "Reposição de raiz dentária com parafuso de titânio.",
+        price: 1200.0,
+        imageUrl: "https://images.unsplash.com/photo-1590424693420-634a0b0b782c?q=80&w=300&auto=format&fit=crop&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D", // Implante dental
+      },
+      {
+        name: "Ortodontia (Aparelho)",
+        description: "Correção do posicionamento dos dentes e mordida.",
+        price: 320.0,
+        imageUrl: "https://images.unsplash.com/photo-1606811841689-23dfddce3e95?w=300", // Aparelho ortodôntico
+      },
+      {
+        name: "Periodontia",
+        description: "Tratamento de doenças da gengiva e estruturas de suporte.",
+        price: 280.0,
+        imageUrl: "https://images.unsplash.com/photo-1609840114035-3c981b782dfe?w=300", // Tratamento periodontal
       },
     ];
 

@@ -1,6 +1,5 @@
 generator client {
   provider = "prisma-client-js"
-  output   = "../src/generated/prisma"
 }
 
 datasource db {
@@ -9,24 +8,92 @@ datasource db {
 }
 
 model User {
-  id        String    @id @default(uuid())
-  email     String
-  name      String
-  createdAt DateTime  @default(now())
-  updateAt  DateTime  @updatedAt
-  bookings  Booking[]
+  id            String            @id @default(cuid())
+  name          String?
+  email         String            @unique
+  emailVerified DateTime?
+  image         String?
+  role          UserRole          @default(CLIENT) // Nova campo
+  accounts      Account[]
+  sessions      Session[]
+  bookings      Booking[]
+  barbershops   BarbershopAdmin[] // Relação com barbearias que administra
+  createdAt     DateTime          @default(now())
+  updatedAt     DateTime          @updatedAt
+}
+
+enum UserRole {
+  CLIENT
+  BARBERSHOP_ADMIN
+  SUPER_ADMIN
+}
+
+model Account {
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@id([provider, providerAccountId])
+}
+
+model Session {
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model VerificationToken {
+  identifier String
+  token      String
+  expires    DateTime
+
+  @@id([identifier, token])
 }
 
 model Barbershop {
-  id          String              @id @default(uuid())
-  name        String
-  address     String
-  phones      String[]
-  description String
-  imageUrl    String
-  createdAt   DateTime            @default(now())
-  updateAt    DateTime            @updatedAt
-  services    BarbershopService[]
+  id                String              @id @default(uuid())
+  name              String
+  address           String
+  phones            String[]
+  description       String
+  imageUrl          String
+  maxClientsPerSlot Int                 @default(1) // Capacidade total por horário
+  barbersCount      Int                 @default(1) // Número de barbeiros
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime?
+  services          BarbershopService[]
+  admins            BarbershopAdmin[]
+  bookings          Booking[]
+}
+
+model BarbershopAdmin {
+  id           String     @id @default(uuid())
+  userId       String
+  user         User       @relation(fields: [userId], references: [id])
+  barbershopId String
+  barbershop   Barbershop @relation(fields: [barbershopId], references: [id])
+  role         String     @default("admin") // admin, owner, manager
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+
+  @@unique([userId, barbershopId])
 }
 
 model BarbershopService {
@@ -37,16 +104,32 @@ model BarbershopService {
   price        Decimal    @db.Decimal(10, 2)
   barbershopId String
   barbershop   Barbershop @relation(fields: [barbershopId], references: [id])
-  bookings     Booking[]
+
+  // relação correta com BookingService (pivot)
+  bookingServices BookingService[]
 }
 
 model Booking {
+  id              String           @id @default(uuid())
+  userId          String
+  user            User             @relation(fields: [userId], references: [id])
+  barbershopId    String?
+  barbershop      Barbershop?       @relation(fields: [barbershopId], references: [id])
+  date            DateTime
+  totalPrice      Decimal?          @db.Decimal(10, 2) // Soma total dos serviços
+  bookingServices BookingService[] // Relação com serviços do agendamento
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+}
+
+model BookingService {
   id        String            @id @default(uuid())
-  userId    String
-  user      User              @relation(fields: [userId], references: [id])
+  bookingId String
+  booking   Booking           @relation(fields: [bookingId], references: [id], onDelete: Cascade)
   serviceId String
   service   BarbershopService @relation(fields: [serviceId], references: [id])
-  date      DateTime
+  price     Decimal           @db.Decimal(10, 2) // Preço na hora do agendamento
   createdAt DateTime          @default(now())
-  updateAt  DateTime          @updatedAt
+
+  @@unique([bookingId, serviceId])
 }

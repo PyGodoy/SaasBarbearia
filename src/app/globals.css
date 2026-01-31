@@ -4,33 +4,94 @@
 
 @layer base {
   .dark {
-    --background: 225 9% 9%;
+    --background: 220 15% 8%;
     --foreground: 210 40% 98%;
 
-    --card: 228 9% 11%;
+    --card: 220 15% 10%;
     --card-foreground: 210 40% 98%;
 
-    --popover: 228 9% 11%;
+    --popover: 220 15% 10%;
     --popover-foreground: 210 40% 98%;
 
-    --primary: 252 100% 69%;
+    /* Azul médico profissional */
+    --primary: 200 98% 39%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 228 6% 16%;
+    --secondary: 220 12% 18%;
     --secondary-foreground: 210 40% 98%;
 
-    --muted: 228 6% 16%;
-    --muted-foreground: 215 20.2% 65.1%;
+    --muted: 220 12% 18%;
+    --muted-foreground: 215 25% 70%;
 
-    --accent: 228 6% 16%;
+    --accent: 220 12% 18%;
     --accent-foreground: 210 40% 98%;
 
+    /* Vermelho suave para ações destrutivas */
+    --destructive: 0 75% 55%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 220 12% 18%;
+    --input: 220 12% 18%;
+    --ring: 200 85% 60%;
+
+    /* Verde para status positivos (consultas confirmadas, etc.) */
+    --success: 142 76% 36%;
+    --success-foreground: 0 0% 100%;
+
+    /* Amarelo para avisos/pendências */
+    --warning: 45 93% 47%;
+    --warning-foreground: 0 0% 0%;
+
+    /* Azul claro para informações */
+    --info: 199 89% 48%;
+    --info-foreground: 0 0% 100%;
+
+    --radius: 0.5rem;
+  }
+
+  /* Tema claro - mais adequado para ambiente médico */
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 224 71% 4%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 224 71% 4%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 224 71% 4%;
+
+    /* Azul médico confiável */
+    --primary: 200 98% 39%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 210 40% 98%;
+    --secondary-foreground: 224 71% 4%;
+
+    --muted: 210 40% 98%;
+    --muted-foreground: 215 16% 47%;
+
+    --accent: 210 40% 98%;
+    --accent-foreground: 224 71% 4%;
+
+    /* Vermelho suave para ações destrutivas */
     --destructive: 0 84% 60%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 228 6% 16%;
-    --input: 228 6% 16%;
-    --ring: 212.7 26.8% 83.9%;
+    --border: 214 32% 91%;
+    --input: 214 32% 91%;
+    --ring: 200 85% 60%;
+
+    /* Verde para status positivos */
+    --success: 142 71% 45%;
+    --success-foreground: 0 0% 100%;
+
+    /* Amarelo para avisos */
+    --warning: 38 92% 50%;
+    --warning-foreground: 0 0% 0%;
+
+    /* Azul para informações */
+    --info: 199 89% 48%;
+    --info-foreground: 0 0% 100%;
 
     --radius: 0.5rem;
   }
@@ -40,10 +101,72 @@
   * {
     @apply border-border antialiased;
   }
+  
   html {
     @apply h-full;
   }
+  
   body {
     @apply h-full bg-background text-foreground;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  }
+
+  /* Classes utilitárias específicas para sistema médico */
+  .bg-success {
+    background-color: hsl(var(--success));
+  }
+  
+  .text-success {
+    color: hsl(var(--success));
+  }
+  
+  .bg-warning {
+    background-color: hsl(var(--warning));
+  }
+  
+  .text-warning {
+    color: hsl(var(--warning));
+  }
+  
+  .bg-info {
+    background-color: hsl(var(--info));
+  }
+  
+  .text-info {
+    color: hsl(var(--info));
+  }
+
+  .text-success-foreground {
+    color: hsl(var(--success-foreground));
+  }
+  
+  .text-warning-foreground {
+    color: hsl(var(--warning-foreground));
+  }
+  
+  .text-info-foreground {
+    color: hsl(var(--info-foreground));
+  }
+
+  /* Estilo para cards de consulta */
+  .consultation-card {
+    @apply bg-card border border-border rounded-lg shadow-sm;
+  }
+
+  /* Estilo para status de consulta */
+  .status-confirmed {
+    @apply bg-success text-success-foreground;
+  }
+
+  .status-pending {
+    @apply bg-warning text-warning-foreground;
+  }
+
+  .status-cancelled {
+    @apply bg-destructive text-destructive-foreground;
+  }
+
+  .status-completed {
+    @apply bg-info text-info-foreground;
   }
 }
